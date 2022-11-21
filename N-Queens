@@ -1,0 +1,188 @@
+#N Queens
+result = []
+# A utility function to print solution
+''' A utility function to check if a queen can
+be placed on board[row][col]. Note that this
+function is called when "col" queens are
+already placed in columns from 0 to col -1.
+So we need to check only left side for
+attacking queens '''
+def isSafe(board, row, col):
+ # Check this row on left side
+ for i in range(col):
+ if (board[row][i]):
+ return False
+ # Check upper diagonal on left side
+ i = row
+ j = col
+ while i >= 0 and j >= 0:
+ if(board[i][j]):
+ return False
+ i -= 1
+ j -= 1
+ # Check lower diagonal on left side
+ i = row
+ j = col
+ while j >= 0 and i < 4:
+ if(board[i][j]):
+ return False
+ i = i + 1
+ j = j - 1
+ return True
+''' A recursive utility function to solve N
+Queen problem '''
+def solveNQUtil(board, col):
+ ''' base case: If all queens are placed
+ then return true '''
+ if (col == 4):
+ v = []
+ for i in board:
+ for j in range(len(i)):
+ if i[j] == 1:
+ v.append(j+1)
+ result.append(v)
+ return True
+ ''' Consider this column and try placing
+ this queen in all rows one by one '''
+ res = False
+ for i in range(4):
+ ''' Check if queen can be placed on
+ board[i][col] '''
+ if (isSafe(board, i, col)):
+ # Place this queen in board[i][col]
+ board[i][col] = 1
+ # Make result true if any placement
+ # is possible
+ res = solveNQUtil(board, col + 1) or res
+ ''' If placing queen in board[i][col]
+ doesn't lead to a solution, then
+ remove queen from board[i][col] '''
+ board[i][col] = 0 # BACKTRACK
+ ''' If queen can not be place in any row in
+ this column col then return false '''
+ return res
+''' This function solves the N Queen problem using
+Backtracking. It mainly uses solveNQUtil() to
+solve the problem. It returns false if queens
+cannot be placed, otherwise return true and
+prints placement of queens in the form of 1s.
+Please note that there may be more than one
+solutions, this function prints one of the
+feasible solutions.'''
+def solveNQ(n):
+ result.clear()
+ board = [[0 for j in range(n)]
+ for i in range(n)]
+ solveNQUtil(board, 0)
+ result.sort()
+ return result
+# Driver Code
+n = 4
+res = solveNQ(n)
+print(res)
+
+
+#0/1 knapsack
+def knapSack(W, wt, val, n):
+ BaseCase
+ if n == 0 or W == 0:
+ return 0
+ 
+ if (wt[n-1] > W):
+ return knapSack(W, wt, val, n-1)
+ 
+ else:
+ return max(
+ val[n-1] + knapSack(
+ W-wt[n-1], wt, val, n-1),
+ knapSack(W, wt, val, n-1))
+ 
+val = [60, 100, 120]
+wt = [10, 20, 30]
+W = 50
+n = len(val)
+print knapSack(W, wt, val, n)
+
+
+
+def printjobschedule(array, t):
+    m = len(array)
+# Sort all jobs accordingly
+    for j in range(m):
+        for q in range(m - 1 - j):
+            if array[q][2] < array[q + 1][2]:
+                array[q], array[q + 1] = array[q + 1], array[q]
+                res = [False] * t
+# To store result
+                job = ['-1'] * t
+                for q in range(len(array)):
+# Find a free slot
+                 for q in range(min(t - 1, array[q][1] - 1), -1, -1):
+                          if res[q] is False:
+                              res[q] = True
+                              job[q] = array[q][0]
+                              break
+# print
+                          print(job)
+# Driver
+array = [['a', 7, 202],
+['b', 5, 29],
+['c', 6, 84],
+['d', 1, 75],
+['e', 2, 43]]
+print("Maximum profit sequence of jobs is- ")
+printjobschedule(array, 3)
+
+
+
+
+#knapsack problem
+
+class Solution:
+    def solve(self ,weights, values,capacity):
+        res = 0
+        for pair in sorted(zip(weights, values), key=lambda x: - x[1]/x[0]):
+            if not bool(capacity):
+                break
+            if pair[0] > capacity:
+                res += int(pair[1] / (pair[0] / capacity))
+                capacity = 0
+            elif pair[0] <= capacity:
+                res += pair[1]
+                capacity -= pair[0]
+        return int(res)
+        
+        
+        
+ob = Solution()
+weights = [6, 7, 3]
+values = [110, 120, 2]
+capacity = 
+print(ob.solve(weights, values, capacity))
+
+
+
+#Fibonacci Sequence
+repeat = int(input("How many terms user wants to print?"))
+
+n_1 = 0
+n_2 = 1
+count = 0
+
+if repeat<0:
+    print("Enter a valid positive integer")
+
+elif repeat==1:
+    print("The fibonacci sequence upto nth terms is ")
+    print(n_1)
+
+else:
+    while count<repeat:
+        print(n_1)
+        nth = n_1 + n_2
+        n_1 = n_2
+        n_2 = nth
+        
+        count+=1
+        
+ 
